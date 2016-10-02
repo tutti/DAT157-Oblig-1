@@ -4,28 +4,63 @@ import java.util.Map;
 import no.patternsolutions.javann.Backpropagation;
 
 public class Oppg3 {
+	
+	// TODO Add "STOP" as its own option
     
-    private static double[] STOP =            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Alanine =         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Arginine =        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Asparagine =      {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] AsparticAcid =    {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Cysteine =        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] GlutamicAcid =    {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Glutamine =       {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Glycine =         {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Histidine =       {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Isoleucine =      {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Leucine =         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Lysine =          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Methionine =      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0};
-    private static double[] Phenylalanine =   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
-    private static double[] Proline =         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0};
-    private static double[] Serine =          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0};
-    private static double[] Threonine =       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
-    private static double[] Tryptophan =      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0};
-    private static double[] Tyrosine =        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
-    private static double[] Valine =          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+    private static double[] Alanine =         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Arginine =        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Asparagine =      {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] AsparticAcid =    {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Cysteine =        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] GlutamicAcid =    {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Glutamine =       {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Glycine =         {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Histidine =       {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Isoleucine =      {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Leucine =         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Lysine =          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Methionine =      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Phenylalanine =   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0};
+    private static double[] Proline =         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
+    private static double[] Serine =          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0};
+    private static double[] Threonine =       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0};
+    private static double[] Tryptophan =      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+    private static double[] Tyrosine =        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0};
+    private static double[] Valine =          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
+    private static double[] STOP =            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+    
+    private static String[] names = {
+	    "Alanine",
+	    "Arginine",
+	    "Asparagine",
+	    "Aspartic acid",
+	    "Cysteine",
+	    "Glutamic acid",
+	    "Glutamine",
+	    "Glycine",
+	    "Histidine",
+	    "Isoleucine",
+	    "Leucine",
+	    "Lysine",
+	    "Methionine",
+	    "Phenylalanine",
+	    "Proline",
+	    "Serine",
+	    "Threonine",
+	    "Tryptophan",
+	    "Tyrosine",
+	    "Valine",
+	    "STOP"
+	};
+    
+    private static String getName(double[] thing) {
+    	for (int i = 0; i < thing.length; ++i) {
+    		if (thing[i] == 1) {
+    			return names[i];
+    		}
+    	}
+    	return "STOP";
+    }
     
     private static Map<String, double[]> solution;
     static {
@@ -69,19 +104,19 @@ public class Oppg3 {
     public static void main(String[] args) {
         // Create the network
         int[] hiddenLayerSizes = {32};
-        Backpropagation mlp = new Backpropagation(12, hiddenLayerSizes, 20);
+        Backpropagation mlp = new Backpropagation(12, hiddenLayerSizes, 21);
         //mlp.setWeightsInit(0.5);
         mlp.setIterations(10000);
         
         // Build the input data from the above
         double[][] input = new double[64][12];
-        double[][] answers = new double[64][20];
+        double[][] answers = new double[64][21];
         { // I want to use i as counter without leaking it, so here's a block
-	        int i = 0;
+	        int i = 0; // Because I need a counter but Java's foreach doesn't give me one
 	        for (Map.Entry<String, double[]> entry : solution.entrySet()) {
 	            input[i] = codon(entry.getKey());
 	            answers[i] = entry.getValue();
-	            i++;
+	            ++i;
 	        }
         }
         
@@ -89,9 +124,40 @@ public class Oppg3 {
         mlp.trainPatterns(input, answers);
         
         // Test the network
-        double[] test = mlp.run(codon("GCA"));
-        for (int i = 0; i < test.length; ++i) {
-        	System.out.println(test[i]*100);
+        for (Map.Entry<String, double[]> entry : solution.entrySet()) {
+            double[] output = mlp.run(codon(entry.getKey()));
+            
+            int bestChoiceIndex = 0;
+            double bestChoiceValue = 0;
+            
+            for (int j = 0; j < output.length; ++j) {
+            	if (output[j] > bestChoiceValue) {
+            		bestChoiceIndex = j;
+            		bestChoiceValue = output[j];
+            	}
+            }
+            
+            String guessName = names[bestChoiceIndex];
+            
+            double[] correct = entry.getValue();
+            String correctName = getName(correct);
+            
+            //System.out.print("Best match: ");
+            System.out.print("Best match for ");
+            System.out.print(entry.getKey());
+            System.out.print(": ");
+            System.out.print(guessName);
+            System.out.print(", with confidence ");
+            System.out.print((int)(bestChoiceValue*100));
+            System.out.print("%");
+            
+            if (!guessName.equals(correctName)) {
+                System.out.print(" (correct answer: ");
+                System.out.print(correctName);
+                System.out.print(")");
+            }
+            
+            System.out.println();
         }
     }
 }
