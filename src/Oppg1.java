@@ -1,6 +1,7 @@
 import java.util.Random;
 
 import no.patternsolutions.javann.Adaline;
+import no.patternsolutions.javann.Backpropagation;
 import no.patternsolutions.javann.Perceptron;
 
 public class Oppg1 {
@@ -83,6 +84,14 @@ public class Oppg1 {
 		return output;
 	}
 	
+	private static double[] toDoubles(boolean[] arr) {
+		double[] out = new double[arr.length];
+		for (int i = 0; i < arr.length; ++i) {
+			out[i] = arr[i] ? 1 : 0;
+		}
+		return out;
+	}
+	
 	private static String resultstring(boolean[] conclusions, String[] names) {
 		StringBuilder out = new StringBuilder();
 		boolean multiple = false;
@@ -96,6 +105,21 @@ public class Oppg1 {
 		return out.toString();
 	}
 	
+	private static String resultstring(double[] conclusions, String[] names) {
+		StringBuilder out = new StringBuilder();
+		boolean first = true;
+		for (int i = 0; i < conclusions.length; ++i) {
+			if (!first) out.append(", ");
+			out.append(String.format("%1s (%0$.2f%%)", names[i], conclusions[i]*100));
+			/*out.append(names[i]);
+			out.append(" (");
+			out.append(conclusions[i]*100);
+			out.append(")");*/
+			first = false;
+		}
+		return out.toString();
+	}
+	
 	public static void main(String[] args) {
 		boolean[][] patterns = {T, O, N};
 		boolean[][] output = {{true, false, false}, {false, true, false}, {false, false, true}};
@@ -104,7 +128,7 @@ public class Oppg1 {
 		// Create the perceptron network
 		Perceptron perceptron = new Perceptron(100, 3);
 		perceptron.setIterations(10000);
-		perceptron.setWeightsInit(0.5);
+		//perceptron.setWeightsInit(0.5);
 		
 		// Train the perceptron network
 		perceptron.trainPatterns(patterns, output);
@@ -131,7 +155,7 @@ public class Oppg1 {
 		// Create the adaline network
 		Adaline adaline = new Adaline(100, 3);
 		adaline.setIterations(10000);
-		adaline.setWeightsInit(0.5);
+		//adaline.setWeightsInit(0.5);
 		
 		// Train the adaline network
 		adaline.trainPatterns(patterns, output);
@@ -155,5 +179,31 @@ public class Oppg1 {
 		System.out.println("Test of T with 20% predetermined noise: " + resultstring(adalineResults[4], names));
 		System.out.println("Test of T with 10% random noise: " + resultstring(adalineResults[5], names));
 		System.out.println("Test of T with 20% random noise: " + resultstring(adalineResults[6], names));
+		
+		// Now try it with an MLP network
+		int[] hiddenLayerSizes = {20};
+		Backpropagation mlp = new Backpropagation(100, hiddenLayerSizes, 3);
+		mlp.setIterations(10000);
+		
+		mlp.trainPatterns(patterns, output);
+		
+		double[][] mlpResults = new double[7][3];
+		mlpResults[0] = mlp.run(toDoubles(T)); // Perfect T
+		mlpResults[1] = mlp.run(toDoubles(O)); // Perfect O
+		mlpResults[2] = mlp.run(toDoubles(N)); // Perfect N
+		mlpResults[3] = mlp.run(toDoubles(T_noise10)); // T with 10% predetermined noise
+		mlpResults[4] = mlp.run(toDoubles(T_noise20)); // T with 20% predetermined noise
+		mlpResults[5] = mlp.run(toDoubles(addNoise(T, 0.1))); // T with 10% random noise
+		mlpResults[6] = mlp.run(toDoubles(addNoise(T, 0.2))); // T with 20% random noise
+		
+		System.out.println();
+		System.out.println("Results from MLP network:");
+		System.out.println("Test of perfect T: " + resultstring(mlpResults[0], names));
+		System.out.println("Test of perfect O: " + resultstring(mlpResults[1], names));
+		System.out.println("Test of perfect N: " + resultstring(mlpResults[2], names));
+		System.out.println("Test of T with 10% predetermined noise: " + resultstring(mlpResults[3], names));
+		System.out.println("Test of T with 20% predetermined noise: " + resultstring(mlpResults[4], names));
+		System.out.println("Test of T with 10% random noise: " + resultstring(mlpResults[5], names));
+		System.out.println("Test of T with 20% random noise: " + resultstring(mlpResults[6], names));
 	}
 }
