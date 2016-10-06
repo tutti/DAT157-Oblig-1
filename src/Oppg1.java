@@ -111,10 +111,6 @@ public class Oppg1 {
 		for (int i = 0; i < conclusions.length; ++i) {
 			if (!first) out.append(", ");
 			out.append(String.format("%1s (%0$.2f%%)", names[i], conclusions[i]*100));
-			/*out.append(names[i]);
-			out.append(" (");
-			out.append(conclusions[i]*100);
-			out.append(")");*/
 			first = false;
 		}
 		return out.toString();
@@ -128,7 +124,6 @@ public class Oppg1 {
 		// Create the perceptron network
 		Perceptron perceptron = new Perceptron(100, 3);
 		perceptron.setIterations(10000);
-		//perceptron.setWeightsInit(0.5);
 		
 		// Train the perceptron network
 		perceptron.trainPatterns(patterns, output);

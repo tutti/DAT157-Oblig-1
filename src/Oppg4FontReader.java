@@ -3,6 +3,18 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * This is a helper class used to load letter shapes from a text file.
+ * The text file has the letter shapes written in a way that's easier for a human
+ * to read and edit. This class reads that text file and converts it into
+ * a deep boolean array that's more suitable for machine reading and learning.
+ * 
+ * The course's lecturer has given permission for this class to be shared, as this
+ * class does none of the work intended to be done as part of the assignment.
+ * 
+ * @author Pål V. Gjerde
+ *
+ */
 public class Oppg4FontReader {
 	
 	private String[] fontStrings;
