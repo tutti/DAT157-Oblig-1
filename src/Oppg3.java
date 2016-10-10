@@ -7,6 +7,7 @@ public class Oppg3 {
 	
 	// TODO Add "STOP" as its own option
     
+	// Output patterns for each amino acid
     private static double[] Alanine =         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private static double[] Arginine =        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private static double[] Asparagine =      {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -29,6 +30,7 @@ public class Oppg3 {
     private static double[] Valine =          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
     private static double[] STOP =            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
     
+    // Names of the amino acids in string form, for the output
     private static String[] names = {
 	    "Alanine",
 	    "Arginine",
@@ -53,15 +55,17 @@ public class Oppg3 {
 	    "STOP"
 	};
     
+    // Gets the correct name for an output pattern
     private static String getName(double[] thing) {
     	for (int i = 0; i < thing.length; ++i) {
     		if (thing[i] == 1) {
     			return names[i];
     		}
     	}
-    	return "STOP";
+    	return "STOP"; // Fallback, should never happen.
     }
-    
+
+	// Map from each codon to the corresponding output pattern
     private static Map<String, double[]> solution;
     static {
         solution = new HashMap<String, double[]>();
@@ -86,6 +90,7 @@ public class Oppg3 {
         solution.put("GUG", Valine);            solution.put("GCG", Alanine);           solution.put("GAG", GlutamicAcid);      solution.put("GGG", Glycine);
     }
     
+    // Takes a codon string (e.g. "UCG"), returns an input pattern for it.
     private static double[] codon(String s) {
         double[] ret = new double[4*s.length()];
         for (int i = 0; i < s.length(); ++i) {
@@ -105,7 +110,6 @@ public class Oppg3 {
         // Create the network
         int[] hiddenLayerSizes = {32};
         Backpropagation mlp = new Backpropagation(12, hiddenLayerSizes, 21);
-        //mlp.setWeightsInit(0.5);
         mlp.setIterations(10000);
         
         // Build the input data from the above
@@ -142,7 +146,6 @@ public class Oppg3 {
             double[] correct = entry.getValue();
             String correctName = getName(correct);
             
-            //System.out.print("Best match: ");
             System.out.print("Best match for ");
             System.out.print(entry.getKey());
             System.out.print(": ");

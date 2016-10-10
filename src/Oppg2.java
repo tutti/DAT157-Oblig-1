@@ -6,6 +6,10 @@ public class Oppg2 {
 	public static final boolean[][] M_OUT = {{true}, {false}, {false}, {false}};
 	
 	public static void main(String[] args) {
+		// The logic here is that two adalines are created, one is trained to recognise (P or Q),
+		// while the other is trained to recognise (not P or not Q). Then a third adaline is
+		// trained to recognise (R and S), and when two boolean values (P, Q) are provided, they
+		// are run through the first two adalines, and the results of both are passed to the third.
 		
 		// Make and train the adalines and madaline
 		Adaline a1 = new Adaline(2, 1);

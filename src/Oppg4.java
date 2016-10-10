@@ -6,6 +6,7 @@ import no.patternsolutions.javann.Perceptron;
 public class Oppg4 {
 	private static String letters = "ABCDEJK";
 	
+	// Prints a list of letters suggested by an output set
 	private static String findLetter(boolean[] output) {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
@@ -19,12 +20,13 @@ public class Oppg4 {
 		return sb.toString();
 	}
 	
+	// Prints a letter suggested by a double list, if any.
 	private static String findLetter(double[] output) {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
 		for (int i = 0; i < output.length; ++i) {
 			if (output[i] >= 0.5) {
-				if (!first) sb.append(", ");
+				if (!first) sb.append(", "); // Won't happen for outputs with total value <= 1
 				sb.append(letters.charAt(i));
 				first = false;
 			}
@@ -32,6 +34,7 @@ public class Oppg4 {
 		return sb.toString();
 	}
 	
+	// Converts a boolean true/false array to a double 1.0/0.0 array.
 	private static double[] toDoubles(boolean[] arr) {
 		double[] out = new double[arr.length];
 		for (int i = 0; i < arr.length; ++i) {
@@ -41,6 +44,7 @@ public class Oppg4 {
 	}
 	
 	public static void main(String[] args) throws IOException {
+		// Read the letters in from file
 		Oppg4FontReader fontReader = new Oppg4FontReader("oppg4letters.txt");
 		boolean[][] font1 = fontReader.getFont(0);
 		boolean[][] font2 = fontReader.getFont(1);
@@ -51,13 +55,7 @@ public class Oppg4 {
 			outputs[i][i] = true;
 		}
 		
-		/*boolean[] A = font1[6];
-		for (int i = 0; i < A.length; ++i) {
-			if (i % 7 == 0)
-				System.out.println();
-			System.out.print(A[i] ? '#' : '-');
-		}*/
-		
+		// Create the perceptron network
 		Perceptron perceptron = new Perceptron(font1[0].length, font1.length);
 		perceptron.setIterations(10000);
 		
@@ -67,6 +65,7 @@ public class Oppg4 {
 		
 		boolean[][][] fonts = {font1, font2, font3};
 
+		// Print the tests and their outputs
 		System.out.println("Testing a perceptron network:");
 		for (int f = 0; f < 3; ++f) {
 			System.out.println("Font " + (f + 1));
@@ -78,6 +77,7 @@ public class Oppg4 {
 			System.out.println();
 		}
 		
+		// Create the MLP network
 		int[] hidden = {40};
 		Backpropagation pony = new Backpropagation(63, hidden, 7);
 		pony.setIterations(10000);
@@ -86,6 +86,7 @@ public class Oppg4 {
 		pony.trainPatterns(font2, outputs);
 		pony.trainPatterns(font3, outputs);
 		
+		// Print the tests and their outputs
 		System.out.println("Testing an MLP network:");
 		for (int f = 0; f < 3; ++f) {
 			System.out.println("Font " + (f + 1));

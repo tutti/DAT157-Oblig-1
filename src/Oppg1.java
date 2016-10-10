@@ -72,6 +72,7 @@ public class Oppg1 {
 	};
 	
 	private static boolean[] addNoise(boolean[] original, double noiseLevel) {
+		// Randomly adds noise to a figure
 		Random rnd = new Random();
 		boolean[] output = new boolean[original.length];
 		for (int i = 0; i < original.length; ++i) {
@@ -85,6 +86,7 @@ public class Oppg1 {
 	}
 	
 	private static double[] toDoubles(boolean[] arr) {
+		// Converts a true/false array to a 1.0/0.0 array because some methods require it
 		double[] out = new double[arr.length];
 		for (int i = 0; i < arr.length; ++i) {
 			out[i] = arr[i] ? 1 : 0;
@@ -93,6 +95,7 @@ public class Oppg1 {
 	}
 	
 	private static String resultstring(boolean[] conclusions, String[] names) {
+		// Prints a list of letters corresponding to the true values in the boolean array
 		StringBuilder out = new StringBuilder();
 		boolean multiple = false;
 		for (int i = 0; i < conclusions.length; ++i) {
@@ -106,6 +109,7 @@ public class Oppg1 {
 	}
 	
 	private static String resultstring(double[] conclusions, String[] names) {
+		// Prints a list of each name along with its confidence level
 		StringBuilder out = new StringBuilder();
 		boolean first = true;
 		for (int i = 0; i < conclusions.length; ++i) {
